@@ -5,6 +5,7 @@ import { PlusCircle, Pencil, Eye, Trash2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Heading from '@/components/Heading.vue';
+import { formatDate } from '@/lib/helpers';
 import { ref } from 'vue';
 import { type BreadcrumbItem } from '@/types';
 
@@ -26,10 +27,6 @@ const isDeleteDialogOpen = ref(false);
 const confirmDelete = (user: User) => {
   userToDelete.value = user;
   isDeleteDialogOpen.value = true;
-};
-
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString();
 };
 
 
