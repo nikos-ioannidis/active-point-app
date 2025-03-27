@@ -45,7 +45,7 @@ const breadcrumbs: BreadcrumbItem[] = [
   <AppLayout :breadcrumbs="breadcrumbs">
     <div class="flex flex-col space-y-6 px-4 py-6">
       <div class="flex items-center justify-between">
-        <Heading title="Users" description="Manage system users" />
+        <Heading title="Users" description="Manage users that have access to the application" />
         <Link :href="route('users.create')">
           <Button>
             <PlusCircle class="mr-2 h-4 w-4" />
