@@ -10,15 +10,22 @@ import { formatDate } from '@/lib/helpers';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Pencil } from 'lucide-vue-next';
 
+interface Role {
+    id: number;
+    name: string;
+}
+
 interface User {
     id?: number;
     name: string;
     email: string;
+    role?: string;
     created_at?: string;
 }
 
 interface Props {
     user?: User;
+    roles?: Role[];
     mode: 'create' | 'edit' | 'show';
 }
 
@@ -29,6 +36,7 @@ const form = useForm({
     email: props.user?.email || '',
     password: '',
     password_confirmation: '',
+    role: props.user?.role || '',
 });
 
 const submit = () => {
@@ -123,6 +131,10 @@ const isReadOnly = props.mode === 'show';
                         <h3 class="text-sm font-medium text-muted-foreground">Email</h3>
                         <p class="mt-1 text-lg font-semibold">{{ user.email }}</p>
                     </div>
+                    <div v-if="user.role">
+                        <h3 class="text-sm font-medium text-muted-foreground">Role</h3>
+                        <p class="mt-1 text-lg font-semibold">{{ user.role }}</p>
+                    </div>
                     <div v-if="user.created_at">
                         <h3 class="text-sm font-medium text-muted-foreground">Created At</h3>
                         <p class="mt-1 text-lg font-semibold">{{ formatDate(user.created_at) }}</p>
@@ -167,9 +179,25 @@ const isReadOnly = props.mode === 'show';
                             id="password_confirmation"
                             v-model="form.password_confirmation"
                             type="password"
-                            :required="props.mode === 'create' || form.password"
+                            :required="props.mode === 'create' || !!form.password"
                             placeholder="Confirm password"
                         />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="role">Role</Label>
+                        <select
+                            id="role"
+                            v-model="form.role"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            required
+                        >
+                            <option value="" disabled>Select a role</option>
+                            <option v-for="role in roles" :key="role.id" :value="role.name">
+                                {{ role.name }}
+                            </option>
+                        </select>
+                        <InputError :message="form.errors.role" />
                     </div>
                 </div>
                 <div class="flex items-center gap-4">

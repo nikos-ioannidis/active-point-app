@@ -13,6 +13,7 @@ interface User {
   id: number;
   name: string;
   email: string;
+  role?: string;
   created_at: string;
 }
 
@@ -60,6 +61,7 @@ const breadcrumbs: BreadcrumbItem[] = [
               <tr class="border-b">
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Role</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created At</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
               </tr>
@@ -71,6 +73,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </td>
                 <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {{ user.email }}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                  {{ user.role || 'None' }}
                 </td>
                 <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {{ formatDate(user.created_at) }}
@@ -94,7 +99,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </td>
               </tr>
               <tr v-if="users.length === 0">
-                <td colspan="4" class="px-6 py-4 text-center text-sm">No users found</td>
+                <td colspan="5" class="px-6 py-4 text-center text-sm">No users found</td>
               </tr>
             </tbody>
           </table>

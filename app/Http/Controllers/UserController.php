@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -21,6 +22,7 @@ class UserController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
+                    'role' => $user->getRoleNames()->first(),
                     'created_at' => $user->created_at,
                 ];
             }),
@@ -32,7 +34,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Users/Create');
+        return Inertia::render('Users/Create', [
+            'roles' => Role::all()->map(function ($role) {
+                return [
+                    'id' => $role->id,
+                    'name' => $role->name,
+                ];
+            }),
+        ]);
     }
 
     /**
@@ -44,13 +53,17 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'string', 'exists:roles,name'],
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
+
+        // Assign role to user
+        $user->assignRole($validated['role']);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
@@ -65,6 +78,7 @@ class UserController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'role' => $user->getRoleNames()->first(),
                 'created_at' => $user->created_at,
             ],
         ]);
@@ -80,7 +94,14 @@ class UserController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'role' => $user->getRoleNames()->first(),
             ],
+            'roles' => Role::all()->map(function ($role) {
+                return [
+                    'id' => $role->id,
+                    'name' => $role->name,
+                ];
+            }),
         ]);
     }
 
@@ -93,6 +114,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'string', 'exists:roles,name'],
         ]);
 
         $user->name = $validated['name'];
@@ -103,6 +125,12 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        // Update user role
+        // First remove all current roles
+        $user->syncRoles([]);
+        // Then assign the new role
+        $user->assignRole($validated['role']);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
