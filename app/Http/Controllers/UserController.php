@@ -14,18 +14,34 @@ class UserController extends Controller
     /**
      * Display a listing of the users.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
+        $query = User::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query->get()->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->getRoleNames()->first(),
+                'created_at' => $user->created_at,
+            ];
+        });
+
         return Inertia::render('Users/Index', [
-            'users' => User::all()->map(function ($user) {
-                return [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'role' => $user->getRoleNames()->first(),
-                    'created_at' => $user->created_at,
-                ];
-            }),
+            'users' => $users,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
 
