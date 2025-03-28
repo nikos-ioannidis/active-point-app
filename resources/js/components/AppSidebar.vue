@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { LayoutGrid, Users, UserRound } from 'lucide-vue-next';
+import { LayoutGrid, Users, Wrench } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
@@ -41,7 +41,7 @@ const adminItems: NavItem[] = [
     {
         title: 'Employees',
         href: '/employees',
-        icon: UserRound,
+        icon: Wrench,
     },
 ];
 

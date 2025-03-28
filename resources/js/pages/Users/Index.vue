@@ -3,6 +3,7 @@ import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Pagination } from '@/components/ui/pagination';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { formatDate } from '@/lib/helpers';
 import { debounce } from '@/lib/utils';
@@ -20,7 +21,11 @@ interface User {
 }
 
 interface Props {
-    users: User[];
+    users: {
+        data: User[];
+        links: any[];
+        meta: any;
+    };
     filters: {
         search: string;
     };
@@ -89,7 +94,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-                            <tr v-for="user in users" :key="user.id" class="hover:bg-muted/50">
+                            <tr v-for="user in users.data" :key="user.id" class="hover:bg-muted/50">
                                 <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
                                     {{ user.name }}
                                 </td>
@@ -127,6 +132,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </table>
                 </div>
             </div>
+
+            <!-- Pagination -->
+            <Pagination :links="users.links" />
         </div>
 
         <!-- Delete Confirmation Dialog -->

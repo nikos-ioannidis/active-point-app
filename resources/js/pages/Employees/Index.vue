@@ -3,6 +3,7 @@ import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Pagination } from '@/components/ui/pagination';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { debounce } from '@/lib/utils';
 import { type BreadcrumbItem } from '@/types';
@@ -163,6 +164,9 @@ const getStatusClass = (isActive: boolean) => {
                     </table>
                 </div>
             </div>
+
+            <!-- Pagination -->
+            <Pagination :links="employees.links" />
         </div>
 
         <!-- Delete Confirmation Dialog -->
