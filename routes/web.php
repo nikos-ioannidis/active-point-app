@@ -3,6 +3,8 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkCategoryController;
+use App\Http\Controllers\WorkTypeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,6 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['role:Admin'])->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('employees', EmployeeController::class);
+        Route::resource('work-categories', WorkCategoryController::class);
+        Route::resource('work-types', WorkTypeController::class);
     });
 
     // Technician routes

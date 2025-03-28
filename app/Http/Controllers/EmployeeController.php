@@ -88,7 +88,7 @@ class EmployeeController extends Controller
         Employee::create($validated);
 
         return redirect()->route('employees.index')
-            ->with('message', 'Employee created successfully.');
+            ->with('success', 'Employee created successfully.');
     }
 
     /**
@@ -162,7 +162,7 @@ class EmployeeController extends Controller
         $employee->update($validated);
 
         return redirect()->route('employees.index')
-            ->with('message', 'Employee updated successfully.');
+            ->with('success', 'Employee updated successfully.');
     }
 
     /**
@@ -173,7 +173,7 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()->route('employees.index')
-            ->with('message', 'Employee deleted successfully.');
+            ->with('success', 'Employee deleted successfully.');
     }
 
     /**
