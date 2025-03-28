@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Admin routes
     Route::middleware(['role:Admin'])->group(function () {
         Route::resource('users', UserController::class);
+        Route::resource('employees', EmployeeController::class);
     });
 
     // Technician routes

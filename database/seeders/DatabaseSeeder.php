@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\EmployeeIrataLevelEnum;
+use App\Models\Employee;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -46,5 +48,35 @@ class DatabaseSeeder extends Seeder
         if (!$technician->hasRole('Technician')) {
             $technician->assignRole('Technician');
         }
+
+        // Create employees for the test users
+        if (!$user->employee) {
+            Employee::create([
+                'user_id' => $user->id,
+                'employee_code' => 'AD0001',
+                'employee_name' => $user->name,
+                'job_title' => 'Administrator',
+                'phone_number' => '123-456-7890',
+                'is_active' => true,
+                'owns_equipment' => false,
+                'irata_level' => EmployeeIrataLevelEnum::LEVEL_3->value,
+            ]);
+        }
+
+        if (!$technician->employee) {
+            Employee::create([
+                'user_id' => $technician->id,
+                'employee_code' => 'TE0001',
+                'employee_name' => $technician->name,
+                'job_title' => 'Senior Technician',
+                'phone_number' => '098-765-4321',
+                'is_active' => true,
+                'owns_equipment' => true,
+                'irata_level' => EmployeeIrataLevelEnum::LEVEL_2->value,
+            ]);
+        }
+
+        // Create some additional employees without users
+        Employee::factory(5)->create();
     }
 }
