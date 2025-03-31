@@ -34,6 +34,7 @@ class EmployeeFactory extends Factory
             'phone_number' => $this->faker->phoneNumber(),
             'is_active' => $this->faker->boolean(80), // 80% chance of being active
             'owns_equipment' => $this->faker->boolean(30), // 30% chance of owning equipment
+            'is_contractor' => $this->faker->boolean(60), // 20% chance of being a contractor
             'irata_level' => $this->faker->randomElement(EmployeeIrataLevelEnum::values()),
         ];
     }

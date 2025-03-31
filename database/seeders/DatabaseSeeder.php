@@ -59,6 +59,7 @@ class DatabaseSeeder extends Seeder
                 'phone_number' => '123-456-7890',
                 'is_active' => true,
                 'owns_equipment' => false,
+                'is_contractor' => false,
                 'irata_level' => EmployeeIrataLevelEnum::LEVEL_3->value,
             ]);
         }
@@ -72,6 +73,7 @@ class DatabaseSeeder extends Seeder
                 'phone_number' => '098-765-4321',
                 'is_active' => true,
                 'owns_equipment' => true,
+                'is_contractor' => true,
                 'irata_level' => EmployeeIrataLevelEnum::LEVEL_2->value,
             ]);
         }

@@ -23,6 +23,7 @@ interface Employee {
     job_title: string;
     phone_number: string;
     is_active: boolean;
+    is_contractor: boolean;
     owns_equipment: boolean;
     irata_level: string;
     created_at?: string;
@@ -51,6 +52,7 @@ const form = useForm({
     job_title: props.employee?.job_title || '',
     phone_number: props.employee?.phone_number || '',
     is_active: props.employee?.is_active ?? true,
+    is_contractor: props.employee?.is_contractor ?? false,
     owns_equipment: props.employee?.owns_equipment ?? false,
     irata_level: props.employee?.irata_level || 'None',
 });
@@ -172,7 +174,11 @@ const isReadOnly = props.mode === 'show';
                         </p>
                     </div>
                     <div>
-                        <h3 class="text-sm font-medium text-muted-foreground">Owns Equipment</h3>
+                        <h3 class="text-sm font-medium text-muted-foreground">Is Contractor</h3>
+                        <p class="mt-1 text-lg font-semibold">{{ employee.is_contractor ? 'Yes' : 'No' }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-medium text-muted-foreground">Owns Equipment?</h3>
                         <p class="mt-1 text-lg font-semibold">{{ employee.owns_equipment ? 'Yes' : 'No' }}</p>
                     </div>
                     <div v-if="employee.user">
@@ -261,6 +267,16 @@ const isReadOnly = props.mode === 'show';
                             class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                         />
                         <Label for="is_active">Active Employee</Label>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <input
+                            id="is_contractor"
+                            v-model="form.is_contractor"
+                            type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                        />
+                        <Label for="is_contractor">Is Contractor</Label>
                     </div>
 
                     <div class="flex items-center space-x-2">

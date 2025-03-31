@@ -26,6 +26,7 @@ class Employee extends Model
         'job_title',
         'phone_number',
         'is_active',
+        'is_contractor',
         'owns_equipment',
         'irata_level',
     ];
@@ -39,6 +40,7 @@ class Employee extends Model
     {
         return [
             'is_active' => 'boolean',
+            'is_contractor' => 'boolean',
             'owns_equipment' => 'boolean',
             'irata_level' => EmployeeIrataLevelEnum::class,
         ];

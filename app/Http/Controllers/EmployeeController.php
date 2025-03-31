@@ -82,6 +82,7 @@ class EmployeeController extends Controller
             'phone_number' => 'required|string|max:255',
             'is_active' => 'boolean',
             'owns_equipment' => 'boolean',
+            'is_contractor' => 'boolean',
             'irata_level' => 'required|in:' . implode(',', EmployeeIrataLevelEnum::values()),
         ]);
 
@@ -156,6 +157,7 @@ class EmployeeController extends Controller
             'phone_number' => 'required|string|max:255',
             'is_active' => 'boolean',
             'owns_equipment' => 'boolean',
+            'is_contractor' => 'boolean',
             'irata_level' => 'required|in:' . implode(',', EmployeeIrataLevelEnum::values()),
         ]);
 
