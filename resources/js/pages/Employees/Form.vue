@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { formatDate } from '@/lib/helpers';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Pencil } from 'lucide-vue-next';
 
@@ -158,7 +157,7 @@ const isReadOnly = props.mode === 'show';
                     <div>
                         <h3 class="text-sm font-medium text-muted-foreground">IRATA Level</h3>
                         <p class="mt-1 text-lg font-semibold">
-                            {{ irataLevels?.find(level => level.value === employee.irata_level)?.label || employee.irata_level }}
+                            {{ irataLevels?.find(level => level.value === employee?.irata_level)?.label || employee.irata_level }}
                         </p>
                     </div>
                     <div>
@@ -180,10 +179,10 @@ const isReadOnly = props.mode === 'show';
                         <h3 class="text-sm font-medium text-muted-foreground">Associated User</h3>
                         <p class="mt-1 text-lg font-semibold">{{ employee.user.name }} ({{ employee.user.email }})</p>
                     </div>
-                    <div v-if="employee.created_at">
+                    <!-- <div v-if="employee.created_at">
                         <h3 class="text-sm font-medium text-muted-foreground">Created At</h3>
                         <p class="mt-1 text-lg font-semibold">{{ formatDate(employee.created_at) }}</p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="mt-6 flex justify-end">
                     <Link :href="route('employees.edit', employee.id)">

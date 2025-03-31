@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { formatDate } from '@/lib/helpers';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Pencil } from 'lucide-vue-next';
 
@@ -135,10 +134,10 @@ const isReadOnly = props.mode === 'show';
                         <h3 class="text-sm font-medium text-muted-foreground">Role</h3>
                         <p class="mt-1 text-lg font-semibold">{{ user.role }}</p>
                     </div>
-                    <div v-if="user.created_at">
+                    <!-- <div v-if="user.created_at">
                         <h3 class="text-sm font-medium text-muted-foreground">Created At</h3>
                         <p class="mt-1 text-lg font-semibold">{{ formatDate(user.created_at) }}</p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="mt-6 flex justify-end">
                     <Link :href="route('users.edit', user.id)">

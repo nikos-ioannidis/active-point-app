@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Pagination } from '@/components/ui/pagination';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { formatDate } from '@/lib/helpers';
 import { debounce } from '@/lib/utils';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
@@ -89,7 +88,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Role</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created At</th>
+                                <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created At</th> -->
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
@@ -104,9 +103,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 <td class="whitespace-nowrap px-6 py-4 text-sm">
                                     {{ user.role || 'None' }}
                                 </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                                <!-- <td class="whitespace-nowrap px-6 py-4 text-sm">
                                     {{ formatDate(user.created_at) }}
-                                </td>
+                                </td> -->
                                 <td class="whitespace-nowrap px-6 py-4 text-sm">
                                     <div class="flex space-x-2">
                                         <Link :href="route('users.show', user.id)">
@@ -125,7 +124,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-if="users.length === 0">
+                            <tr v-if="users.data.length === 0">
                                 <td colspan="5" class="px-6 py-4 text-center text-sm">No users found</td>
                             </tr>
                         </tbody>

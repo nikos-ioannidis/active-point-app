@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { formatDate } from '@/lib/helpers';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Pencil, PlusCircle } from 'lucide-vue-next';
 
@@ -125,10 +124,10 @@ const isReadOnly = props.mode === 'show';
                         <h3 class="text-sm font-medium text-muted-foreground">Name</h3>
                         <p class="mt-1 text-lg font-semibold">{{ workCategory.name }}</p>
                     </div>
-                    <div v-if="workCategory.created_at">
+                    <!-- <div v-if="workCategory.created_at">
                         <h3 class="text-sm font-medium text-muted-foreground">Created At</h3>
                         <p class="mt-1 text-lg font-semibold">{{ formatDate(workCategory.created_at) }}</p>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Work Types List -->

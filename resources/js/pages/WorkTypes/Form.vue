@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { formatDate, formatPrice } from '@/lib/helpers';
+import { formatPrice } from '@/lib/helpers';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Pencil } from 'lucide-vue-next';
@@ -156,10 +156,10 @@ const isReadOnly = props.mode === 'show';
                         <h3 class="text-sm font-medium text-muted-foreground">Max Hours</h3>
                         <p class="mt-1 text-lg font-semibold">{{ workType.max_hours }}</p>
                     </div>
-                    <div v-if="workType.created_at">
+                    <!-- <div v-if="workType.created_at">
                         <h3 class="text-sm font-medium text-muted-foreground">Created At</h3>
                         <p class="mt-1 text-lg font-semibold">{{ formatDate(workType.created_at) }}</p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="mt-6 flex justify-end">
                     <Link :href="route('work-types.edit', workType.id)">
@@ -204,13 +204,13 @@ const isReadOnly = props.mode === 'show';
 
                     <div class="grid gap-2">
                         <Label for="price_gamesa">Gamesa Price</Label>
-                        <Input id="price_gamesa" v-model="form.price_gamesa" type="number" step="0.01" min="0" placeholder="0.00" />
+                        <Input id="price_gamesa" v-model="form.price_gamesa!" type="number" step="0.01" min="0" placeholder="0.00" />
                         <InputError :message="form.errors.price_gamesa" />
                     </div>
 
                     <div class="grid gap-2">
                         <Label for="price_gamesa_abroad">Gamesa Abroad Price</Label>
-                        <Input id="price_gamesa_abroad" v-model="form.price_gamesa_abroad" type="number" step="0.01" min="0" placeholder="0.00" />
+                        <Input id="price_gamesa_abroad" v-model="form.price_gamesa_abroad!" type="number" step="0.01" min="0" placeholder="0.00" />
                         <InputError :message="form.errors.price_gamesa_abroad" />
                     </div>
 

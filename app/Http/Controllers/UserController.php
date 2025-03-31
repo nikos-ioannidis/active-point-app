@@ -16,34 +16,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // $search = $request->input('search');
-
-        // $query = User::query();
-
-        // if ($search) {
-        //     $query->where(function ($q) use ($search) {
-        //         $q->where('name', 'like', "%{$search}%")
-        //             ->orWhere('email', 'like', "%{$search}%");
-        //     });
-        // }
-
-        // $users = $query->get()->map(function ($user) {
-        //     return [
-        //         'id' => $user->id,
-        //         'name' => $user->name,
-        //         'email' => $user->email,
-        //         'role' => $user->getRoleNames()->first(),
-        //         'created_at' => $user->created_at,
-        //     ];
-        // });
-
-        // return Inertia::render('Users/Index', [
-        //     'users' => $users,
-        //     'filters' => [
-        //         'search' => $search,
-        //     ],
-        // ]);
-
         $search = $request->input('search');
 
         $users = User::query()
