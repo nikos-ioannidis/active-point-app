@@ -56,6 +56,10 @@ const adminItems: NavItem[] = [
                 title: 'Types',
                 href: '/work-types',
             },
+            {
+                title: 'Trainings',
+                href: '/trainings',
+            },
         ],
     },
 ];

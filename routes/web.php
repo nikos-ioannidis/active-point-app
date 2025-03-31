@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkCategoryController;
 use App\Http\Controllers\WorkTypeController;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('employees', EmployeeController::class);
         Route::resource('work-categories', WorkCategoryController::class);
         Route::resource('work-types', WorkTypeController::class);
+        Route::resource('trainings', TrainingController::class);
     });
 
     // Technician routes
