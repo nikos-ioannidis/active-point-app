@@ -44,7 +44,7 @@ const adminItems: NavItem[] = [
         icon: Wrench,
     },
     {
-        title: 'Work',
+        title: 'Pricing',
         href: '#',
         icon: FolderKanban,
         children: [
