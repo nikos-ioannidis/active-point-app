@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { LayoutGrid, Users, Wrench, Briefcase, ListTodo } from 'lucide-vue-next';
+import { LayoutGrid, Users, Wrench, FolderKanban } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
@@ -44,14 +44,19 @@ const adminItems: NavItem[] = [
         icon: Wrench,
     },
     {
-        title: 'Work Categories',
-        href: '/work-categories',
-        icon: Briefcase,
-    },
-    {
-        title: 'Work Types',
-        href: '/work-types',
-        icon: ListTodo,
+        title: 'Work',
+        href: '#',
+        icon: FolderKanban,
+        children: [
+            {
+                title: 'Categories',
+                href: '/work-categories',
+            },
+            {
+                title: 'Types',
+                href: '/work-types',
+            },
+        ],
     },
 ];
 
