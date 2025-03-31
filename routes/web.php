@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkCategoryController;
@@ -31,6 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('work-categories', WorkCategoryController::class);
         Route::resource('work-types', WorkTypeController::class);
         Route::resource('trainings', TrainingController::class);
+
+        // System Settings routes
+        Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name('system-settings.index');
+        Route::post('/system-settings', [SystemSettingsController::class, 'update'])->name('system-settings.update');
     });
 
     // Technician routes

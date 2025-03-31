@@ -1,0 +1,76 @@
+[
+  {
+    "key": "mobdemob_work_category",
+    "label": "MobDemob - Work Category",
+    "type": "select_dynamic",
+    "source": {
+      "model": "WorkCategory",
+      "value_field": "id",
+      "label_field": "name"
+    },
+    "default": null,
+    "group": "pricing",
+    "validation": "nullable|exists:work_categories,id"
+  },
+  {
+    "key": "apothiki_work_category",
+    "label": "Αποθήκη - Work Category",
+    "type": "select_dynamic",
+    "source": {
+      "model": "WorkCategory",
+      "value_field": "id",
+      "label_field": "name"
+    },
+    "default": null,
+    "group": "pricing",
+    "validation": "nullable|exists:work_categories,id"
+  },
+  {
+    "key": "highest_amount_mobdemob",
+    "label": "Highest amount in MobDemob",
+    "type": "number",
+    "default": 0,
+    "group": "pricing",
+    "validation": "required|numeric|min:0"
+  },
+  {
+    "key": "equipment_usage_per_day",
+    "label": "χρηση εξοπλισμού/μερα",
+    "type": "number",
+    "default": 0,
+    "group": "pricing",
+    "validation": "required|numeric|min:0"
+  },
+  {
+    "key": "training_over_8_hours_per_hour",
+    "label": "εκπαίδευση>8 ώρες/ώρα",
+    "type": "number",
+    "default": 0,
+    "group": "pricing",
+    "validation": "required|numeric|min:0"
+  },
+  {
+    "key": "training_up_to_4_hours",
+    "label": "εκπαίδευση εως 4 ώρες",
+    "type": "number",
+    "default": 0,
+    "group": "pricing",
+    "validation": "required|numeric|min:0"
+  },
+  {
+    "key": "standby_compensation",
+    "label": "Αποζημίωση αναμονής* ΣΤΑΛΙΑ - StandBy",
+    "type": "number",
+    "default": 0,
+    "group": "pricing",
+    "validation": "required|numeric|min:0"
+  },
+  {
+    "key": "internal_employees_increase_percentage",
+    "label": "Increase percentage of internal employees for non Apothiki hours",
+    "type": "number",
+    "default": 0,
+    "group": "pricing",
+    "validation": "required|numeric|min:0"
+  }
+]

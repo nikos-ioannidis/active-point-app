@@ -1,0 +1,113 @@
+[
+  {
+    "key": "company_name",
+    "label": "Company Name",
+    "type": "text",
+    "default": "",
+    "group": "general",
+    "validation": "required|string|max:255"
+  },
+  {
+    "key": "company_email",
+    "label": "Company Email",
+    "type": "email",
+    "default": "",
+    "group": "general",
+    "validation": "required|email|max:255"
+  },
+  {
+    "key": "company_phone",
+    "label": "Company Phone",
+    "type": "text",
+    "default": "",
+    "group": "general",
+    "validation": "required|string|max:20"
+  },
+  {
+    "key": "company_address",
+    "label": "Company Address",
+    "type": "textarea",
+    "default": "",
+    "group": "general",
+    "validation": "required|string|max:500"
+  },
+  {
+    "key": "default_hourly_rate",
+    "label": "Default Hourly Rate",
+    "type": "number",
+    "default": 0,
+    "group": "pricing",
+    "validation": "required|numeric|min:0"
+  },
+  {
+    "key": "default_work_category",
+    "label": "Default Work Category",
+    "type": "select_dynamic",
+    "source": {
+      "model": "WorkCategory",
+      "value_field": "id",
+      "label_field": "name"
+    },
+    "default": null,
+    "group": "work",
+    "validation": "nullable|exists:work_categories,id"
+  },
+  {
+    "key": "payment_terms",
+    "label": "Payment Terms",
+    "type": "select_static",
+    "options": [
+      {"value": "net_15", "label": "Net 15"},
+      {"value": "net_30", "label": "Net 30"},
+      {"value": "net_60", "label": "Net 60"}
+    ],
+    "default": "net_30",
+    "group": "billing",
+    "validation": "required|string"
+  },
+  {
+    "key": "invoice_prefix",
+    "label": "Invoice Prefix",
+    "type": "text",
+    "default": "INV-",
+    "group": "billing",
+    "validation": "required|string|max:10"
+  },
+  {
+    "key": "invoice_starting_number",
+    "label": "Invoice Starting Number",
+    "type": "number",
+    "default": 1000,
+    "group": "billing",
+    "validation": "required|integer|min:1"
+  },
+  {
+    "key": "tax_rate",
+    "label": "Tax Rate (%)",
+    "type": "number",
+    "default": 24,
+    "group": "billing",
+    "validation": "required|numeric|min:0|max:100"
+  },
+  {
+    "key": "currency",
+    "label": "Currency",
+    "type": "select_static",
+    "options": [
+      {"value": "EUR", "label": "Euro (€)"},
+      {"value": "USD", "label": "US Dollar ($)"},
+      {"value": "GBP", "label": "British Pound (£)"}
+    ],
+    "default": "EUR",
+    "group": "billing",
+    "validation": "required|string"
+  },
+  {
+    "key": "enable_irata_certification",
+    "label": "Enable IRATA Certification",
+    "type": "boolean",
+    "default": true,
+    "group": "work",
+    "validation": "boolean"
+  }
+]
