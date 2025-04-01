@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeWorkTypeController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
@@ -30,6 +31,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['role:Admin'])->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('employees', EmployeeController::class);
+        // Employee work type routes
+        Route::get('/employees/{employee}/work-types', [EmployeeWorkTypeController::class, 'edit'])->name('employees.work-types.edit');
+        Route::post('/employees/{employee}/work-types', [EmployeeWorkTypeController::class, 'update'])->name('employees.work-types.update');
+
         Route::resource('work-categories', WorkCategoryController::class);
         Route::resource('work-types', WorkTypeController::class);
         Route::resource('trainings', TrainingController::class);
@@ -42,7 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Technician routes
     Route::middleware(['role:Technician'])->group(function () {
-
+        // No routes for technicians yet
     });
 
     // Routes accessible to both Admin and Technician

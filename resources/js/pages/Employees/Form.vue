@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ArrowLeft, Pencil } from 'lucide-vue-next';
+import { ArrowLeft, Pencil, Briefcase } from 'lucide-vue-next';
 
 interface User {
     id: number;
@@ -190,11 +190,17 @@ const isReadOnly = props.mode === 'show';
                         <p class="mt-1 text-lg font-semibold">{{ formatDate(employee.created_at) }}</p>
                     </div> -->
                 </div>
-                <div class="mt-6 flex justify-end">
+                <div class="mt-6 flex justify-end space-x-2">
                     <Link :href="route('employees.edit', employee.id)">
                         <Button>
                             <Pencil class="mr-2 h-4 w-4" />
                             Edit Employee
+                        </Button>
+                    </Link>
+                    <Link :href="route('employees.work-types.edit', employee.id)">
+                        <Button variant="outline">
+                            <Briefcase class="mr-2 h-4 w-4" />
+                            Manage Work Types
                         </Button>
                     </Link>
                 </div>
