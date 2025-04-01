@@ -35,7 +35,7 @@
   },
   {
     "key": "equipment_usage_per_day",
-    "label": "χρηση εξοπλισμού/μερα",
+    "label": "Χρηση εξοπλισμού/μερα",
     "type": "number",
     "default": 0,
     "group": "pricing",
@@ -43,7 +43,7 @@
   },
   {
     "key": "training_over_8_hours_per_hour",
-    "label": "εκπαίδευση>8 ώρες/ώρα",
+    "label": "Εκπαίδευση>8 ώρες/ώρα",
     "type": "number",
     "default": 0,
     "group": "pricing",
@@ -51,7 +51,7 @@
   },
   {
     "key": "training_up_to_4_hours",
-    "label": "εκπαίδευση εως 4 ώρες",
+    "label": "Εκπαίδευση εως 4 ώρες",
     "type": "number",
     "default": 0,
     "group": "pricing",
