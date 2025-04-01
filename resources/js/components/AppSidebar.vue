@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { LayoutGrid, Users, Wrench, FolderKanban, Settings } from 'lucide-vue-next';
+import { LayoutGrid, Users, Wrench, FolderKanban, Settings, Car } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
@@ -72,6 +72,11 @@ const technicianItems: NavItem[] = [
 // Shared items
 const sharedItems: NavItem[] = [
     {
+        title: 'Vehicles',
+        href: '/vehicles',
+        icon: Car,
+    },
+    {
         title: 'System Settings',
         href: '/system-settings',
         icon: Settings,
@@ -95,18 +100,7 @@ const mainNavItems = computed(() => {
     return items;
 });
 
-const footerNavItems: NavItem[] = [
-    // {
-    //     title: 'Github Repo',
-    //     href: 'https://github.com/laravel/vue-starter-kit',
-    //     icon: Folder,
-    // },
-    // {
-    //     title: 'Documentation',
-    //     href: 'https://laravel.com/docs/starter-kits',
-    //     icon: BookOpen,
-    // },
-];
+const footerNavItems: NavItem[] = [];
 </script>
 
 <template>

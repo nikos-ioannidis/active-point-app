@@ -5,6 +5,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkCategoryController;
 use App\Http\Controllers\WorkTypeController;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('work-categories', WorkCategoryController::class);
         Route::resource('work-types', WorkTypeController::class);
         Route::resource('trainings', TrainingController::class);
+        Route::resource('vehicles', VehicleController::class)->except('destroy');
 
         // System Settings routes
         Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name('system-settings.index');

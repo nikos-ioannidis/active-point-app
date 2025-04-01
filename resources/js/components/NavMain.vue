@@ -59,17 +59,29 @@ const toggleItem = (title: string) => {
 };
 
 const isItemActive = (item: NavItem) => {
+    // Check if the URL exactly matches the href
     if (item.href === page.url) return true;
+
+    // Check if the URL starts with the href (for resource controllers)
+    // This handles routes like /vehicles/1/edit, /vehicles/create, etc.
+    if (item.href !== '#' && item.href !== '/' && page.url.startsWith(item.href + '/')) return true;
+
+    // Check if any children are active
     if (item.children) {
         return item.children.some((child) => {
             return isItemActiveChild(child);
         });
     }
+
     return false;
 };
 
 const isItemActiveChild = (item: NavItem) => {
-    return page.url.includes(item.href);
+    // Check if the URL exactly matches the href
+    if (item.href === page.url) return true;
+
+    // Check if the URL starts with the href (for resource controllers)
+    return item.href !== '#' && item.href !== '/' && page.url.startsWith(item.href + '/');
 };
 </script>
 
@@ -80,7 +92,7 @@ const isItemActiveChild = (item: NavItem) => {
             <template v-for="item in items" :key="item.title">
                 <!-- Regular menu item without children -->
                 <SidebarMenuItem v-if="!item.children">
-                    <SidebarMenuButton as-child :is-active="item.href === page.url" :tooltip="item.title">
+                    <SidebarMenuButton as-child :is-active="isItemActive(item)" :tooltip="item.title">
                         <Link :href="item.href">
                             <component :is="item.icon" class="h-4 w-4" />
                             <span>{{ item.title }}</span>
