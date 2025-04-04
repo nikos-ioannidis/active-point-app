@@ -19,11 +19,19 @@ interface Vehicle {
     license_plate: string;
 }
 
+interface WorkJob {
+    id: number;
+    code: string;
+    description: string;
+    client_name: string;
+    client_id: string;
+}
+
 interface DailyReport {
     id: number;
     employee_id: number;
     report_date: string;
-    job_name: string;
+    work_job_id: number | null;
     vehicle_id: number | null;
     notes: string | null;
     total_minutes: number | null;
@@ -31,6 +39,7 @@ interface DailyReport {
     updated_at: string;
     employee?: Employee;
     vehicle?: Vehicle;
+    workJob?: WorkJob;
 }
 
 interface Props {
@@ -166,7 +175,13 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 </span>
                             </td>
                             <td class="px-6 py-4">
-                                {{ report.job_name }}
+                                <div v-if="report.workJob">
+                                    <div class="font-medium">{{ report.workJob.code }} - {{ report.workJob.description }}</div>
+                                    <div class="text-sm text-gray-500">{{ report.workJob.client_name }}</div>
+                                </div>
+                                <div v-else>
+                                    N/A
+                                </div>
                             </td>
                             <td class="whitespace-nowrap px-6 py-4">
                                 {{ report.vehicle?.license_plate || 'None' }}

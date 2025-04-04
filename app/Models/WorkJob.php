@@ -26,7 +26,6 @@ class WorkJob extends Model
         'description',
         'client_name',
         'client_id',
-        'is_active',
     ];
 
     /**

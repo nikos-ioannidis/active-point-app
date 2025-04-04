@@ -59,7 +59,6 @@ class WorkJobsImport implements ToModel, WithStartRow, WithChunkReading
                     'description' => $row[2],
                     'client_name' => $clientName,
                     'client_id' => $clientId,
-                    'is_active' => true,
                 ]
             );
 

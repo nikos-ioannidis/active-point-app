@@ -7,6 +7,7 @@ use App\Models\DailyReportWorkEntry;
 use App\Models\Employee;
 use App\Models\Vehicle;
 use App\Models\WorkCategory;
+use App\Models\WorkJob;
 use App\Models\WorkType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,12 +26,12 @@ class DailyReportController extends Controller
 
         // For admin, show all reports
         if ($user && $user->roles && $user->roles->contains('name', 'Admin')) {
-            $reports = DailyReport::with(['employee', 'vehicle'])
+            $reports = DailyReport::with(['employee', 'vehicle', 'workJob'])
                 ->orderBy('report_date', 'desc')
                 ->paginate(10);
         } else {
             // For technician, show only their reports
-            $reports = DailyReport::with(['vehicle'])
+            $reports = DailyReport::with(['vehicle', 'workJob'])
                 ->where('employee_id', $employee->id)
                 ->orderBy('report_date', 'desc')
                 ->paginate(10);
@@ -72,6 +73,11 @@ class DailyReportController extends Controller
         // Get work categories
         $workTypes = WorkCategory::orderBy('name')->get();
 
+        // Get active jobs
+        $workJobs = WorkJob::where('is_active', true)
+            ->orderBy('code')
+            ->get();
+
         // Get all employees for admin users
         $employees = $isAdmin ? Employee::isActive()->orderBy('employee_name')->get() : null;
 
@@ -79,6 +85,7 @@ class DailyReportController extends Controller
             'employee' => $employee,
             'vehicles' => $vehicles,
             'workTypes' => $workTypes,
+            'workJobs' => $workJobs,
             'mode' => 'create',
             'isAdmin' => $isAdmin,
             'employees' => $employees,
@@ -100,7 +107,7 @@ class DailyReportController extends Controller
                 'required',
                 'date',
             ],
-            'job_name' => 'required|string|max:255',
+            'work_job_id' => 'required|exists:work_jobs,id',
             'vehicle_id' => 'nullable|exists:vehicles,id',
             'notes' => 'nullable|string',
             'work_entries' => 'required|array|min:1',
@@ -132,7 +139,7 @@ class DailyReportController extends Controller
         $report = DailyReport::create([
             'employee_id' => $employeeId,
             'report_date' => $validated['report_date'],
-            'job_name' => $validated['job_name'],
+            'work_job_id' => $validated['work_job_id'],
             'vehicle_id' => $validated['vehicle_id'],
             'notes' => $validated['notes'],
             'total_minutes' => 0, // Will be updated after work entries are created
@@ -166,7 +173,7 @@ class DailyReportController extends Controller
      */
     public function show(DailyReport $dailyReport)
     {
-        $dailyReport->load(['employee', 'vehicle', 'workEntries.workType']);
+        $dailyReport->load(['employee', 'vehicle', 'workJob', 'workEntries.workType']);
 
         return Inertia::render('DailyReports/Show', [
             'report' => $dailyReport,
@@ -187,16 +194,19 @@ class DailyReportController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $dailyReport->load(['workEntries']);
+        $dailyReport->load(['workEntries', 'workJob']);
 
         // Get all active vehicles
-        $vehicles = Vehicle::where('is_active', true)
-            ->orderBy('license_plate')
+        $vehicles = Vehicle::orderBy('license_plate')
             ->get();
 
         // Get work categories
         $workTypes = WorkCategory::orderBy('name')->get();
         $reportEmployee = $dailyReport->employee;
+
+        // Get active jobs
+        $workJobs = WorkJob::orderBy('code')
+            ->get();
 
         // Get all employees for admin users
         $employees = $isAdmin ? Employee::orderBy('employee_name')->get() : null;
@@ -226,6 +236,7 @@ class DailyReportController extends Controller
             'employee' => $reportEmployee,
             'vehicles' => $vehicles,
             'workTypes' => $workTypes,
+            'workJobs' => $workJobs,
             'mode' => 'edit',
             'isAdmin' => $isAdmin,
             'employees' => $employees,
@@ -252,7 +263,7 @@ class DailyReportController extends Controller
                 'required',
                 'date',
             ],
-            'job_name' => 'required|string|max:255',
+            'work_job_id' => 'required|exists:work_jobs,id',
             'vehicle_id' => 'nullable|exists:vehicles,id',
             'notes' => 'nullable|string',
             'work_entries' => 'required|array|min:1',
@@ -277,7 +288,7 @@ class DailyReportController extends Controller
         // Update the daily report
         $dailyReport->update([
             'report_date' => $validated['report_date'],
-            'job_name' => $validated['job_name'],
+            'work_job_id' => $validated['work_job_id'],
             'vehicle_id' => $validated['vehicle_id'],
             'notes' => $validated['notes'],
         ]);

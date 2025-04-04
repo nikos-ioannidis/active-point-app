@@ -35,6 +35,14 @@ interface WorkCategory {
     types: WorkType[];
 }
 
+interface WorkJob {
+    id: number;
+    code: string;
+    description: string;
+    client_name: string;
+    client_id: string;
+}
+
 interface WorkEntry {
     id?: number;
     work_type_id: number | null;
@@ -47,7 +55,7 @@ interface DailyReport {
     id?: number;
     employee_id: number;
     report_date: string;
-    job_name: string;
+    work_job_id: number | null;
     vehicle_id: number | null;
     notes: string | null;
     work_entries: WorkEntry[];
@@ -57,6 +65,7 @@ interface Props {
     employee: Employee;
     vehicles: Vehicle[];
     workTypes: WorkCategory[];
+    workJobs: WorkJob[];
     report?: DailyReport;
     mode: 'create' | 'edit';
     isAdmin: boolean;
@@ -69,7 +78,7 @@ const props = defineProps<Props>();
 const form = useForm({
     employee_id: props.report?.employee_id || props.employee.id,
     report_date: props.report?.report_date || moment().format('YYYY-MM-DD'),
-    job_name: props.report?.job_name || '',
+    work_job_id: props.report?.work_job_id || null,
     vehicle_id: props.report?.vehicle_id || null,
     notes: props.report?.notes || '',
     work_entries: props.report?.work_entries || [
@@ -189,9 +198,19 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="job_name">Job Name</Label>
-                        <Input id="job_name" v-model="form.job_name" type="text" required placeholder="Enter job name or description" />
-                        <InputError :message="form.errors.job_name" />
+                        <Label for="work_job_id">Job</Label>
+                        <select
+                            id="work_job_id"
+                            v-model="form.work_job_id"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            required
+                        >
+                            <option :value="null" disabled>Select job</option>
+                            <option v-for="job in workJobs" :key="job.id" :value="job.id">
+                                {{ job.code }} - {{ job.description }} ({{ job.client_name }})
+                            </option>
+                        </select>
+                        <InputError :message="form.errors.work_job_id" />
                     </div>
 
                     <div class="grid gap-2">
@@ -315,7 +334,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 
 <style scoped>
-
 .fake-input {
     background-color: #f3f4f6; /* Tailwind's gray-100 */
     padding: 0.5rem;
@@ -323,5 +341,4 @@ const breadcrumbs: BreadcrumbItem[] = [
     color: #374151; /* Tailwind's gray-800 */
     font-size: 0.875rem; /* Tailwind's text-sm */
 }
-
 </style>

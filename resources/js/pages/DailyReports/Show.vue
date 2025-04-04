@@ -36,11 +36,19 @@ interface WorkEntry {
     work_type: WorkType;
 }
 
+interface WorkJob {
+    id: number;
+    code: string;
+    description: string;
+    client_name: string;
+    client_id: string;
+}
+
 interface DailyReport {
     id: number;
     employee_id: number;
     report_date: string;
-    job_name: string;
+    work_job_id: number | null;
     vehicle_id: number | null;
     notes: string | null;
     total_minutes: number | null;
@@ -48,6 +56,7 @@ interface DailyReport {
     updated_at: string;
     employee: Employee;
     vehicle: Vehicle | null;
+    workJob: WorkJob | null;
     work_entries: WorkEntry[];
 }
 
@@ -160,7 +169,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </div>
                     <div>
                         <h3 class="text-sm font-medium text-muted-foreground">Job</h3>
-                        <p class="mt-1 text-lg font-semibold">{{ report.job_name }}</p>
+                        <div v-if="report.workJob" class="mt-1">
+                            <p class="text-lg font-semibold">{{ report.workJob.code }} - {{ report.workJob.description }}</p>
+                            <p class="text-sm text-muted-foreground">{{ report.workJob.client_name }}</p>
+                        </div>
+                        <p v-else class="mt-1 text-lg font-semibold">N/A</p>
                     </div>
                     <div>
                         <h3 class="text-sm font-medium text-muted-foreground">Vehicle</h3>

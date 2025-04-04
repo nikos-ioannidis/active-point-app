@@ -19,7 +19,7 @@ class DailyReport extends Model
     protected $fillable = [
         'employee_id',
         'report_date',
-        'job_name',
+        'work_job_id',
         'vehicle_id',
         'notes',
         'total_minutes',
@@ -57,5 +57,13 @@ class DailyReport extends Model
     public function workEntries(): HasMany
     {
         return $this->hasMany(DailyReportWorkEntry::class);
+    }
+
+    /**
+     * Get the work job associated with the daily report.
+     */
+    public function workJob(): BelongsTo
+    {
+        return $this->belongsTo(WorkJob::class);
     }
 }
