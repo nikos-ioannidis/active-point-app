@@ -9,6 +9,7 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkCategoryController;
+use App\Http\Controllers\WorkJobController;
 use App\Http\Controllers\WorkTypeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('work-types', WorkTypeController::class);
         Route::resource('trainings', TrainingController::class);
         Route::resource('vehicles', VehicleController::class)->except('destroy');
+        Route::resource('work-jobs', WorkJobController::class)->except('destroy');
+        Route::post('work-jobs/import', [WorkJobController::class, 'import'])->name('work-jobs.import');
 
         // System Settings routes
         Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name('system-settings.index');
