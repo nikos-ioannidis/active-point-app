@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeWorkTypeController;
@@ -51,7 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Routes accessible to both Admin and Technician
-    // Add shared routes here
+    // Daily Reports (02) routes - accessible to both Admin and Technician
+    Route::resource('daily-reports', DailyReportController::class);
 });
 
 require __DIR__ . '/settings.php';

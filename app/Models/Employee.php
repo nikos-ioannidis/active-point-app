@@ -74,4 +74,10 @@ class Employee extends Model
         // get enum label from enum class
         return $this->irata_level?->label();
     }
+
+    // scope is active
+    public function scopeIsActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }

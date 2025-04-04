@@ -9,7 +9,7 @@ import { debounce } from '@/lib/utils';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { type PageProps } from '@inertiajs/core';
-import { Eye, Pencil, PlusCircle, Search, Trash2 } from 'lucide-vue-next';
+import { Eye, Pencil, PlusCircle, Search, Archive } from 'lucide-vue-next';
 import { computed, ref, watch } from 'vue';
 
 interface CustomPageProps extends PageProps {
@@ -60,13 +60,13 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const employeeToDelete = ref<Employee | null>(null);
-const isDeleteDialogOpen = ref(false);
+const employeeToArchive = ref<Employee | null>(null);
+const isArchiveDialogOpen = ref(false);
 const search = ref(props.filters.search || '');
 
-const confirmDelete = (employee: Employee) => {
-    employeeToDelete.value = employee;
-    isDeleteDialogOpen.value = true;
+const confirmArchive = (employee: Employee) => {
+    employeeToArchive.value = employee;
+    isArchiveDialogOpen.value = true;
 };
 
 // Debounce search to avoid too many requests
@@ -177,10 +177,10 @@ const getIsContractorClass = (isContractor: boolean) => {
                                         <Button
                                             variant="destructive"
                                             size="icon"
-                                            @click="confirmDelete(employee)"
-                                            v-if="userRoles.includes('Admin')"
+                                            @click="confirmArchive(employee)"
+                                            v-if="userRoles.includes('Admin') && employee.is_active"
                                         >
-                                            <Trash2 class="h-4 w-4" />
+                                            <Archive class="h-4 w-4" />
                                         </Button>
                                     </div>
                                 </td>
@@ -197,28 +197,28 @@ const getIsContractorClass = (isContractor: boolean) => {
             <Pagination :links="employees.links" />
         </div>
 
-        <!-- Delete Confirmation Dialog -->
-        <Dialog v-model:open="isDeleteDialogOpen">
+        <!-- Archive Confirmation Dialog -->
+        <Dialog v-model:open="isArchiveDialogOpen">
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Delete Employee</DialogTitle>
+                    <DialogTitle>Archive Employee</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to delete {{ employeeToDelete?.employee_name }}? This action cannot be undone.
+                        Are you sure you want to archive {{ employeeToArchive?.employee_name }}? The employee will be marked as inactive but their data will still be accessible in reports.
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button variant="outline" @click="isDeleteDialogOpen = false">Cancel</Button>
+                    <Button variant="outline" @click="isArchiveDialogOpen = false">Cancel</Button>
                     <Button
                         variant="destructive"
                         @click="
                             () => {
-                                router.delete(route('employees.destroy', employeeToDelete?.id), {
-                                    onFinish: () => (isDeleteDialogOpen = false),
+                                router.delete(route('employees.destroy', employeeToArchive?.id), {
+                                    onFinish: () => (isArchiveDialogOpen = false),
                                 });
                             }
                         "
                     >
-                        Delete
+                        Archive
                     </Button>
                 </DialogFooter>
             </DialogContent>

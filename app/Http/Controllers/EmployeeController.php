@@ -168,14 +168,14 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Remove the specified employee from storage.
+     * Archive the specified employee (mark as inactive).
      */
     public function destroy(Employee $employee)
     {
-        $employee->delete();
+        $employee->update(['is_active' => false]);
 
         return redirect()->route('employees.index')
-            ->with('success', 'Employee deleted successfully.');
+            ->with('success', 'Employee archived successfully.');
     }
 
     /**
