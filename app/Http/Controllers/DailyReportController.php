@@ -352,8 +352,8 @@ class DailyReportController extends Controller
 
         foreach ($dailyReport->workEntries as $entry) {
             // Parse start and end times
-            $startTime = \Carbon\Carbon::parse($dailyReport->report_date . ' ' . $entry->start_time);
-            $endTime = \Carbon\Carbon::parse($dailyReport->report_date . ' ' . $entry->end_time);
+            $startTime = $dailyReport->report_date->setTimeFromTimeString($entry->start_time);
+            $endTime = $dailyReport->report_date->setTimeFromTimeString($entry->end_time);
 
             // If end time is before start time, assume it's the next day
             if ($endTime->lt($startTime)) {

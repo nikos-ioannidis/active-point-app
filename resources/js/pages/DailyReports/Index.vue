@@ -121,99 +121,83 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <!-- Reports Table -->
-            <div class="rounded-md border">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th
-                                scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            >
-                                Date
-                            </th>
-                            <th
-                                scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            >
-                                Technician
-                            </th>
-                            <th
-                                scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            >
-                                Job
-                            </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
+            <div class="rounded-lg border">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-muted/50">
+                            <tr class="border-b">
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                    Date
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                    Technician
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                    Job
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Vehicle
                                 </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Hours
                                 </th>
-                            <th
-                                scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                            >
-                                Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                        <tr v-for="report in reports.data" :key="report.id">
-                            <td class="whitespace-nowrap px-6 py-4">
-                                {{ formatDate(report.report_date) }}
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <span>
-                                    {{ report.employee?.employee_name || 'N/A' }}
-                                    <span v-if="report.employee && !report.employee.is_active" class="ml-1 rounded-full bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-800">Archived</span>
-                                </span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div v-if="report.workJob">
-                                    <div class="font-medium">{{ report.workJob.code }} - {{ report.workJob.description }}</div>
-                                    <div class="text-sm text-gray-500">{{ report.workJob.client_name }}</div>
-                                </div>
-                                <div v-else>
-                                    N/A
-                                </div>
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                {{ report.vehicle?.license_plate || 'None' }}
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                {{ report.total_minutes ? formatHoursAndMinutes(report.total_minutes) : '-' }}
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                                <div class="flex space-x-2">
-                                    <Link :href="route('daily-reports.show', report.id)">
-                                        <Button variant="outline" size="icon">
-                                            <Eye class="h-4 w-4" />
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y">
+                            <tr v-for="report in reports.data" :key="report.id" class="hover:bg-muted/50">
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    {{ formatDate(report.report_date) }}
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    <span>
+                                        {{ report.employee?.employee_name || 'N/A' }}
+                                        <span v-if="report.employee && !report.employee.is_active" class="ml-1 rounded-full bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-800">Archived</span>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div v-if="report.workJob">
+                                        <div class="font-medium">{{ report.workJob.code }} - {{ report.workJob.description }}</div>
+                                        <div class="text-sm text-gray-500">{{ report.workJob.client_name }}</div>
+                                    </div>
+                                    <div v-else>
+                                        N/A
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    {{ report.vehicle?.license_plate || 'None' }}
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    {{ report.total_minutes ? formatHoursAndMinutes(report.total_minutes) : '-' }}
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <Link :href="route('daily-reports.show', report.id)">
+                                            <Button variant="outline" size="icon">
+                                                <Eye class="h-4 w-4" />
+                                            </Button>
+                                        </Link>
+                                        <Link :href="route('daily-reports.edit', report.id)">
+                                            <Button variant="outline" size="icon">
+                                                <Pencil class="h-4 w-4" />
+                                            </Button>
+                                        </Link>
+                                        <Button variant="destructive" size="icon" @click="confirmDelete(report)">
+                                            <Trash2 class="h-4 w-4" />
                                         </Button>
-                                    </Link>
-                                    <Link :href="route('daily-reports.edit', report.id)">
-                                        <Button variant="outline" size="icon">
-                                            <Pencil class="h-4 w-4" />
-                                        </Button>
-                                    </Link>
-                                    <Button variant="destructive" size="icon" @click="confirmDelete(report)">
-                                        <Trash2 class="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr v-if="reports.data.length === 0">
-                            <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                No reports found. Create your first report!
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr v-if="reports.data.length === 0">
+                                <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                                    No reports found. Create your first report!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Pagination -->

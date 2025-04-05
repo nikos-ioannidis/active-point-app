@@ -245,68 +245,70 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </Button>
                     </div>
 
-                    <div class="overflow-x-auto rounded-md border">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                        Work Type
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                        Start Time
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                        End Time
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                        Description
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="(entry, index) in form.work_entries" :key="index">
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <select
-                                            v-model="entry.work_type_id"
-                                            class="w-full rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                                            required
-                                        >
-                                            <option :value="null" disabled>Select work type</option>
-                                            <option v-for="category in workTypes" :key="category.id" :value="category.id">
-                                                {{ category.name }}
-                                            </option>
-                                        </select>
-                                        <InputError :message="form.errors[`work_entries.${index}.work_type_id`]" />
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <Input v-model="entry.start_time" type="time" required class="w-full" />
-                                        <InputError :message="form.errors[`work_entries.${index}.start_time`]" />
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <Input v-model="entry.end_time" type="time" required class="w-full" />
-                                        <InputError :message="form.errors[`work_entries.${index}.end_time`]" />
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <Input v-model="entry.description" type="text" placeholder="Optional description" class="w-full" />
-                                        <InputError :message="form.errors[`work_entries.${index}.description`]" />
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            size="icon"
-                                            @click="removeWorkEntry(index)"
-                                            :disabled="form.work_entries.length <= 1"
-                                        >
-                                            <Trash class="h-4 w-4 text-red-500" />
-                                        </Button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="rounded-lg border">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-muted/50">
+                                    <tr class="border-b">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Work Type
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Start Time
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            End Time
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Description
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y">
+                                    <tr v-for="(entry, index) in form.work_entries" :key="index" class="hover:bg-muted/50">
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <select
+                                                v-model="entry.work_type_id"
+                                                class="w-full rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                                required
+                                            >
+                                                <option :value="null" disabled>Select work type</option>
+                                                <option v-for="category in workTypes" :key="category.id" :value="category.id">
+                                                    {{ category.name }}
+                                                </option>
+                                            </select>
+                                            <InputError :message="form.errors[`work_entries.${index}.work_type_id`]" />
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <Input v-model="entry.start_time" type="time" required class="w-full" />
+                                            <InputError :message="form.errors[`work_entries.${index}.start_time`]" />
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <Input v-model="entry.end_time" type="time" required class="w-full" />
+                                            <InputError :message="form.errors[`work_entries.${index}.end_time`]" />
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <Input v-model="entry.description" type="text" placeholder="Optional description" class="w-full" />
+                                            <InputError :message="form.errors[`work_entries.${index}.description`]" />
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon"
+                                                @click="removeWorkEntry(index)"
+                                                :disabled="form.work_entries.length <= 1"
+                                            >
+                                                <Trash class="h-4 w-4 text-red-500" />
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <InputError :message="form.errors.work_entries" />
                 </div>
@@ -332,13 +334,19 @@ const breadcrumbs: BreadcrumbItem[] = [
     </AppLayout>
 </template>
 
-
-<style scoped>
+<style scoped lang="scss">
 .fake-input {
-    background-color: #f3f4f6; /* Tailwind's gray-100 */
+    background-color: #f3f4f6;
     padding: 0.5rem;
-    border-radius: 0.375rem; /* Tailwind's rounded-md */
-    color: #374151; /* Tailwind's gray-800 */
-    font-size: 0.875rem; /* Tailwind's text-sm */
+    border-radius: 0.375rem;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+html.dark {
+    .fake-input {
+        background-color: #0a0a0a;
+        color: inherit;
+    }
 }
 </style>

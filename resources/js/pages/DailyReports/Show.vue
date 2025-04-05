@@ -194,67 +194,54 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </p>
                 </div>
 
-                <div class="overflow-x-auto rounded-md border">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Work Type
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Start Time
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    End Time
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Duration
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Description
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr v-for="entry in report.work_entries" :key="entry.id">
-                                <td class="whitespace-nowrap px-6 py-4">
-                                    {{ entry.work_type.name }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4">
-                                    {{ formatTime(entry.start_time) }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4">
-                                    {{ formatTime(entry.end_time) }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4">
-                                    {{ calculateDuration(entry.start_time, entry.end_time) }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ entry.description || '-' }}
-                                </td>
-                            </tr>
-                            <tr v-if="report.work_entries.length === 0">
-                                <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
-                                    No work entries found.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="rounded-lg border">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-muted/50">
+                                <tr class="border-b">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Work Type
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Start Time
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        End Time
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Duration
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Description
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr v-for="entry in report.work_entries" :key="entry.id" class="hover:bg-muted/50">
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {{ entry.work_type.name }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {{ formatTime(entry.start_time) }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {{ formatTime(entry.end_time) }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {{ calculateDuration(entry.start_time, entry.end_time) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ entry.description || '-' }}
+                                    </td>
+                                </tr>
+                                <tr v-if="report.work_entries.length === 0">
+                                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                                        No work entries found.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="mt-6 flex justify-end">

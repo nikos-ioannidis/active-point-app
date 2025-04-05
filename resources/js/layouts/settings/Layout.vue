@@ -14,13 +14,17 @@ const sidebarNavItems: NavItem[] = [
         title: 'Password',
         href: '/settings/password',
     },
-    {
-        title: 'Appearance',
-        href: '/settings/appearance',
-    },
+    // {
+    //     title: 'Appearance',
+    //     href: '/settings/appearance',
+    // },
 ];
 
-const page = usePage();
+interface ZiggyProps {
+    location?: string;
+}
+
+const page = usePage<{ ziggy?: ZiggyProps }>();
 
 const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.location).pathname : '';
 </script>

@@ -1,24 +1,38 @@
 <script setup lang="ts">
 import { useAppearance } from '@/composables/useAppearance';
 import { Monitor, Moon, Sun } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 interface Props {
     class?: string;
+    showSystem?: boolean;
 }
 
-const { class: containerClass = '' } = defineProps<Props>();
+const props = defineProps<Props>();
+
+console.log(props);
+
+// containerClass
+const containerClass = computed(() => {
+    return props.class ? props.class : '';
+});
 
 const { appearance, updateAppearance } = useAppearance();
 
-const tabs = [
+type Appearance = 'light' | 'dark' | 'system';
+
+const tabs: { value: Appearance; Icon: any; label: string }[] = [
     { value: 'light', Icon: Sun, label: 'Light' },
     { value: 'dark', Icon: Moon, label: 'Dark' },
-    { value: 'system', Icon: Monitor, label: 'System' },
-] as const;
+];
+
+if (!props.showSystem) {
+    tabs.push({ value: 'system' as Appearance, Icon: Monitor, label: 'System' });
+}
 </script>
 
 <template>
-    <div :class="['inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800', containerClass]">
+    <div :class="['inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800', containerClass]" class="w-100 appearance-container">
         <button
             v-for="{ value, Icon, label } in tabs"
             :key="value"
@@ -35,3 +49,13 @@ const tabs = [
         </button>
     </div>
 </template>
+
+<style scoped lang="scss">
+.appearance-container {
+    width: 100%;
+
+    button {
+        width: 100%;
+    }
+}
+</style>
